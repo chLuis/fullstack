@@ -2,6 +2,7 @@ import express from 'express';
 import { dbConnect } from './src/database/config.js';
 import dotenv from 'dotenv'
 import router from './src/routes/pokemonRoutes/index.js'
+import routerEntrenador from './src/routes/entrenadorRoutes/index.js'
 
 dotenv.config()
 
@@ -29,8 +30,11 @@ app.get('/test', (req, res) => {
 //     }
 // })
 
-app.use('/pokemon', router)
+//app.use('/pokemon', router)
+
+app.use('/entrenador', routerEntrenador)
 
 
+dbConnect()
 app.listen(8080)
 

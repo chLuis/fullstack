@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
-import { MongoClient } from 'mongodb';
 
 export const dbConnect = async() => {
     try{
-        const data = await MongoClient.connect(process.env.URL_DB);
-        console.log('DB1 connected');
+        const data = await mongoose.connect(process.env.URL_DB);
+        console.log('DB connected');
         return (data);
     }
     catch(error){
