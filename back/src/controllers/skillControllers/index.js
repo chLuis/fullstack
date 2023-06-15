@@ -1,6 +1,7 @@
 import Skill from '../../models/skill.js'
 import { dbConnect } from '../../database/config.js'
 import mongoose from 'mongoose'
+import skill from '../../models/skill.js';
 
 function generarIdAlfanumerico() {
     const caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -30,8 +31,8 @@ export const createSkills = async (req, res) => {
 
 export const getSkills = async (req, res) => {
     try {
-        const data = await dbConnect()
-        const collection = data.connection.collection('skills')
+        //const data = await dbConnect()
+        const collection = mongoose.connection.collection('skills')
         const document = await collection.find().toArray()
         res.status(200).json(document)
     }
@@ -44,8 +45,8 @@ export const getSkills = async (req, res) => {
 export const deleteSkills = async (req, res) => {
   try{
     const {id} = req.params
-    await Skill.findByIdAndDelete(id)
-    const {name} = req.body
+    const skillDeleted = await Skill.findByIdAndDelete(id)
+    const {name} = skillDeleted
     res.status(200).send(`Skill eliminado -> ${name}`)
     //res.status(200).send()
     //res.status(200).send(body)
