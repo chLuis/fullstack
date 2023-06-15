@@ -3,6 +3,7 @@ import { dbConnect } from './src/database/config.js';
 import dotenv from 'dotenv'
 import router from './src/routes/pokemonRoutes/index.js'
 import routerEntrenador from './src/routes/entrenadorRoutes/index.js'
+import routerSkill from './src/routes/skillRoutes/index.js'
 
 dotenv.config()
 
@@ -33,6 +34,8 @@ app.get('/test', (req, res) => {
 //app.use('/pokemon', router)
 
 app.use('/entrenador', routerEntrenador)
+app.use('/skill', routerSkill)
+
 
 
 dbConnect()
