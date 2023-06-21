@@ -1,7 +1,6 @@
 import Skill from '../../models/skill.js'
-import { dbConnect } from '../../database/config.js'
 import mongoose from 'mongoose'
-import skill from '../../models/skill.js';
+
 
 function generarIdAlfanumerico() {
     const caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -22,7 +21,7 @@ export const createSkills = async (req, res) => {
         const {name, type, description } = req.body
         const skill = new Skill({_id, name, type, description})
         await skill.save()
-        res.status(200).send('Skill creado')
+        res.status(201).send('Skill creado')
     }
     catch (error) {
         res.status(400).send(error.message)
@@ -31,7 +30,6 @@ export const createSkills = async (req, res) => {
 
 export const getSkills = async (req, res) => {
     try {
-        //const data = await dbConnect()
         const collection = mongoose.connection.collection('skills')
         const document = await collection.find().toArray()
         res.status(200).json(document)
@@ -46,11 +44,8 @@ export const deleteSkills = async (req, res) => {
   try{
     const {id} = req.params
     const skillDeleted = await Skill.findByIdAndDelete(id)
-    const {name} = skillDeleted
-    res.status(200).send(`Skill eliminado -> ${name}`)
-    //res.status(200).send()
-    //res.status(200).send(body)
-  
+    const {name, type, description} = skillDeleted
+    res.status(200).send(`Skill eliminado -> name: ${name}, type: ${type}, description: ${description}`)
   }
   catch (error) {
     res.status(400).send(error.message)
