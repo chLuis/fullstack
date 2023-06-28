@@ -4,7 +4,7 @@ import { createEntrenador, getEntrenador, updateEntrenador } from '../../control
 const router = express.Router()
 
 router.post('/create', createEntrenador)
-router.get('/get', getEntrenador)
+router.get('/get/:id', getEntrenador)
 router.put('/update', updateEntrenador)
 
 export default router
