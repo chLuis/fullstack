@@ -1,5 +1,5 @@
 import Entrenador from '../../models/entrenador.js'
-import { dbConnect } from '../../database/config.js'
+import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import { genSaltSync, hashSync, compareSync } from 'bcrypt'
 
@@ -43,7 +43,11 @@ export const getEntrenador = async (req, res) => {
 
         const passValidacion = compareSync(password, contrasenia)
 
-        name === nombre && passValidacion ? res.status(200).json(nombre) : res.status(400).send('Error')
+        if(name === nombre && passValidacion) {
+            const token = jwt.sign({idEntrenador, nombre}, "claveSecreta")
+            return res.status(200).json(token)
+        }
+        res.status(400).send('Error')
     }
     catch (error) {
         res.status(400).send(error.message)
